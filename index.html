@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Snake</title>
+    <link rel="stylesheet" href="./styles.css">
+    <script src="./snake-logic.js" defer></script>
+    <script src="./snake-game.js" defer></script>
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="game-panel" aria-labelledby="game-title">
+        <header class="panel-header">
+          <div>
+            <p class="eyebrow">Classic Loop</p>
+            <h1 id="game-title">Snake</h1>
+          </div>
+          <div class="score-card" aria-label="Current score">
+            <span>Score</span>
+            <strong id="score">0</strong>
+          </div>
+        </header>
+
+        <p id="status" class="status-text">
+          Press an arrow key, WASD, or tap a direction to start.
+        </p>
+
+        <div
+          id="board"
+          class="board"
+          aria-label="Snake game board"
+          role="grid"
+        ></div>
+
+        <div class="action-row">
+          <button id="pause-button" type="button">Pause</button>
+          <button id="restart-button" type="button">Restart</button>
+        </div>
+
+        <div class="touch-controls" aria-label="On-screen controls">
+          <button class="control-button control-up" type="button" data-direction="up">
+            Up
+          </button>
+          <button class="control-button control-left" type="button" data-direction="left">
+            Left
+          </button>
+          <button class="control-button control-down" type="button" data-direction="down">
+            Down
+          </button>
+          <button class="control-button control-right" type="button" data-direction="right">
+            Right
+          </button>
+        </div>
+
+        <p class="helper-text">
+          Controls: Arrow keys or WASD to move, Space to pause, R to restart.
+        </p>
+      </section>
+    </main>
+  </body>
+</html>
