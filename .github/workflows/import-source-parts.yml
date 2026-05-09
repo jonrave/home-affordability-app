@@ -21,6 +21,35 @@ jobs:
             echo "No source archive parts present; nothing to import."
             exit 0
           fi
+      - name: Repair archive chunks
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          p = Path("source-archive/part-ac")
+          s = p.read_text()
+          s = s.replace("M/7/Ho833", "M/7/L833")
+          p.write_text(s)
+
+          p = Path("source-archive/part-ad")
+          s = p.read_text()
+          if not s.endswith("BWq"):
+              s += "BWq"
+          p.write_text(s)
+
+          p = Path("source-archive/part-ae")
+          s = p.read_text()
+          s = s.replace(
+              "lkvlSrVZXp3//vTPxL939",
+              "lkvlSrVZXp3//vSPRP9g4nEvfaQ+/4X7f7XZXJ3/HuJRzn+B33WdvjVY8hVAKfX9f6NRb1SA/9frK/3fwzyr898v/WjPf0vmA3PpX+j/OP03ify/Ov/d/xM5/5VbtUphvdWq1VqNZnN1/vvTPxL939",
+          )
+          s = s.replace("Wyv935//0dP", "Wyv935/+0dP")
+          p.write_text(s)
+
+          p = Path("source-archive/part-ag")
+          s = p.read_text()
+          p.write_text(s.rstrip("\n") + "\n")
+          PY
       - name: Extract source archive
         run: |
           cat source-archive/part-* > source.tar.gz.b64
