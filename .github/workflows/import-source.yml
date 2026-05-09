@@ -1,0 +1,39 @@
+name: Import source archive
+
+on:
+  push:
+    paths:
+      - source.tar.gz.b64
+      - .github/workflows/import-source.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import-source:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Stop if no archive is present
+        run: |
+          if [ ! -f source.tar.gz.b64 ]; then
+            echo "No source archive present; nothing to import."
+            exit 0
+          fi
+      - name: Extract source archive
+        run: |
+          base64 -d source.tar.gz.b64 > source.tar.gz
+          tar -xzf source.tar.gz
+          rm source.tar.gz source.tar.gz.b64
+      - name: Commit imported source
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "import app source"
+          git push
