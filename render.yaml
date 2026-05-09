@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: home-affordability-api
+    runtime: python
+    plan: free
+    buildCommand: python -m pip install -r backend/requirements.txt
+    startCommand: python -m uvicorn affordability.api:app --app-dir backend --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      - key: CORS_ORIGINS
+        sync: false
